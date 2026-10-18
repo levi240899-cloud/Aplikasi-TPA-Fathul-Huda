@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="theme-color" content="#059669">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>TPA Fathul Huda</title>
-  <link rel="manifest" href="./manifest.json">
-  <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/3004/3004458.png">
-  <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/3004/3004458.png">
-  <style>
-    body, html { margin: 0; padding: 0; width: 100%; height: 100%; overflow: hidden; background-color: #059669; }
-    iframe { width: 100%; height: 100%; border: none; display: block; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privat Sam</title>
+    
+    <!-- Menghubungkan Manifest PWA -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#007bff">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <style>
+        /* Mengatur agar Web App GAS memenuhi seluruh layar HP/Laptop */
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #ffffff;
+        }
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
 </head>
 <body>
-  <iframe id="appFrame" allow="clipboard-write"></iframe>
 
-  <script>
-    // Menyusun URL Web App Apps Script secara utuh agar tidak rusak
-    const deployId = "AKfycbyaXB00qgqfmsgVH5MD6MqZ7CuuPx_mvqbUiG_FZ-zSzbcd-zqjPRh6ycu9MX1KttDj";
-    document.getElementById("appFrame").src = "https://script.google.com/macros/s/" + deployId + "/exec";
+    <!-- ⚠️ GANTI URL DI BAWAH INI DENGAN URL WEB APP GOOGLE SCRIPT ANDA -->
+    <iframe src="https://script.google.com/macros/s/AKfycbyaXB00qgqfmsgVH5MD6MqZ7CuuPx_mvqbUiG_FZ-zSzbcd-zqjPRh6ycu9MX1KttDj/exec"></iframe>
 
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js');
-      });
-    }
-  </script>
+    <!-- Mendaftarkan Service Worker PWA -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('sw.js')
+            .then(reg => console.log('Service Worker terdaftar!', reg))
+            .catch(err => console.log('Gagal daftar Service Worker', err));
+        });
+      }
+    </script>
 </body>
 </html>
