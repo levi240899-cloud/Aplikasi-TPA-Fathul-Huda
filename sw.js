@@ -1,11 +1,24 @@
-self.addEventListener('install', (e) => {
-  self.skipWaiting();
+const CACHE_NAME = 'TPA Fathul Huda';
+const assets = [
+  './',
+  './index.html',
+  './manifest.json'
+];
+
+// Tahap Install: Menyimpan aset ke cache
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(cache => {
+      return cache.addAll(assets);
+    })
+  );
 });
 
-self.addEventListener('activate', (e) => {
-  e.waitUntil(self.clients.claim());
-});
-
-self.addEventListener('fetch', (e) => {
-  e.respondWith(fetch(e.request).catch(() => new Response(' Anda sedang offline.')));
+// Tahap Fetch: Mengambil aset dari cache jika offline
+self.addEventListener('fetch', e => {
+  e.respondWith(
+    caches.match(e.request).then(response => {
+      return response || fetch(e.request);
+    })
+  );
 });
