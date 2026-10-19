@@ -3,13 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Privat Sam</title>
+    <title>TPA Fathul Huda</title>
     
     <!-- Menghubungkan Manifest PWA -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#007bff">
+    <link rel="manifest" href="./manifest.json">
+    
+    <!-- Menghubungkan Logo App.png yang ada di GitHub -->
+    <link rel="icon" type="image/png" href="./Logo%20App.png">
+    <link rel="apple-touch-icon" href="./Logo%20App.png">
+
+    <meta name="theme-color" content="#059669">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TPA Fathul Huda">
 
     <style>
         /* Mengatur agar Web App GAS memenuhi seluruh layar HP/Laptop */
@@ -19,25 +26,30 @@
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #ffffff;
+            background-color: #059669;
         }
         iframe {
             width: 100%;
             height: 100%;
             border: none;
+            display: block;
         }
     </style>
 </head>
 <body>
 
-    <!-- ⚠️ GANTI URL DI BAWAH INI DENGAN URL WEB APP GOOGLE SCRIPT ANDA -->
-    <iframe src="https://script.google.com/macros/s/AKfycbyaXB00qgqfmsgVH5MD6MqZ7CuuPx_mvqbUiG_FZ-zSzbcd-zqjPRh6ycu9MX1KttDj/exec"></iframe>
+    <!-- Membuka Web App Google Apps Script -->
+    <iframe id="gasFrame" allow="clipboard-write"></iframe>
 
-    <!-- Mendaftarkan Service Worker PWA -->
     <script>
+      // Menyusun URL Web App agar aman dan langsung dimuat ke iframe
+      const gasId = "AKfycbyaXB00qgqfmsgVH5MD6MqZ7CuuPx_mvqbUiG_FZ-zSzbcd-zqjPRh6ycu9MX1KttDj";
+      document.getElementById("gasFrame").src = "https://script.google.com/macros/s/" + gasId + "/exec";
+
+      // Mendaftarkan Service Worker PWA
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
-          navigator.serviceWorker.register('sw.js')
+          navigator.serviceWorker.register('./sw.js')
             .then(reg => console.log('Service Worker terdaftar!', reg))
             .catch(err => console.log('Gagal daftar Service Worker', err));
         });
